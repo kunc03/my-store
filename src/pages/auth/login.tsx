@@ -1,9 +1,10 @@
+import LoginView from '@/components/views/auth/Login';
 import React from 'react';
 
 export default function LoginPage() {
   return (
     <div>
-      <div>Login</div>
+      <LoginView />
     </div>
   );
 }
