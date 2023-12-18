@@ -3,6 +3,8 @@ import styles from './Login.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
+import Input from '@/components/ui/Input';
+import Button from '@/components/ui/Button';
 
 const LoginView = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -44,27 +46,21 @@ const LoginView = () => {
       {error && <p className={styles.login__error}>{error}</p>}
       <div className={styles.login__form}>
         <form onSubmit={handleSubmit}>
-          <div className={styles.login__form__item}>
-            <label htmlFor="email">Email</label>
-            <input name="email" id="email" type="email" className={styles.login__form__item__input} />
-          </div>
-          <div className={styles.login__form__item}>
-            <label htmlFor="password">Password</label>
-            <input name="password" id="password" type="password" className={styles.login__form__item__input} />
-          </div>
-          <button type="submit" className={styles.login__form__button}>
-            {isLoading ? 'Loading...' : 'Login'}
-          </button>
+          <Input label="Email" name="email" type="email" />
+          <Input label="Password" name="password" type="password" />
+          <Button type="submit" variant="primery">
+            {isLoading ? 'Loading...' : 'Masuk'}
+          </Button>
         </form>
         <hr className={styles.login__form__devider} />
         <div className={styles.login__form__other}>
-          <button type="button" onClick={() => signIn('google', { callbackUrl, redirect: false })} className={styles.login__form__other__button}>
-            <i className="bx bxl-google" /> Login with Google
-          </button>
+          <Button type="button" onClick={() => signIn('google', { callbackUrl, redirect: false })} variant="" className={styles.login__form__other__button}>
+            <i className="bx bxl-google" /> Masuk dengan Google
+          </Button>
         </div>
       </div>
       <p className={styles.login__link}>
-        Don{"'"}t have an account? Sign up <Link href="/auth/register">here</Link>
+        Belum punya akun? <Link href="/auth/register">Daftar Sekarang</Link>
       </p>
     </div>
   );

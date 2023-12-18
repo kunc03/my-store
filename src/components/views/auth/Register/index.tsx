@@ -1,12 +1,17 @@
+import Input from '@/components/ui/Input';
 import styles from './Register.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
+import Button from '@/components/ui/Button';
+import { signIn } from 'next-auth/react';
 
 const RegisterView = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const { push } = useRouter();
+  const { push, query } = useRouter();
+
+  const callbackUrl: any = query?.callbackUrl || '/';
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
@@ -39,33 +44,28 @@ const RegisterView = () => {
 
   return (
     <div className={styles.register}>
-      <h1 className={styles.register__title}>Register</h1>
+      <h1 className={styles.register__title}>Daftar</h1>
       {error && <p className={styles.register__error}>{error}</p>}
       <div className={styles.register__form}>
         <form onSubmit={handleSubmit}>
-          <div className={styles.register__form__item}>
-            <label htmlFor="email">Email</label>
-            <input name="email" id="email" type="email" className={styles.register__form__item__input} />
-          </div>
-          <div className={styles.register__form__item}>
-            <label htmlFor="password">Password</label>
-            <input name="password" id="password" type="password" className={styles.register__form__item__input} />
-          </div>
-          <div className={styles.register__form__item}>
-            <label htmlFor="fullname">Fullname</label>
-            <input name="fullname" id="fullname" type="text" className={styles.register__form__item__input} />
-          </div>
-          <div className={styles.register__form__item}>
-            <label htmlFor="phone">Phone</label>
-            <input name="phone" id="phone" type="text" className={styles.register__form__item__input} />
-          </div>
-          <button type="submit" className={styles.register__form__button}>
-            {isLoading ? 'Loading...' : 'Register'}
-          </button>
+          <Input label="Email" name="email" type="email" />
+          <Input label="Password" name="password" type="password" />
+          <Input label="Fullname" name="fullname" type="text" />
+          <Input label="Phone" name="phone" type="text" />
+
+          <Button type="submit" variant="primery">
+            {isLoading ? 'Loading...' : 'Daftar'}
+          </Button>
         </form>
+        <hr className={styles.register__form__devider} />
+        <div className={styles.register__form__other}>
+          <Button type="button" onClick={() => signIn('google', { callbackUrl, redirect: false })} variant="" className={styles.login__form__other__button}>
+            <i className="bx bxl-google" /> Daftar dengan Google
+          </Button>
+        </div>
       </div>
       <p className={styles.register__link}>
-        Have an account? Sign in <Link href="/auth/login">here</Link>
+        Sudah punya akun? ayo <Link href="/auth/login">Masuk</Link>
       </p>
     </div>
   );
